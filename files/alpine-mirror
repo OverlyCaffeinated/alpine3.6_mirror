@@ -9,8 +9,20 @@ fi
 src=rsync://rsync.alpinelinux.org/alpine/
 dest=/var/www/localhost/htdocs/alpine/
 
-# Exclude all versions except 3.6
-exclude="--exclude v2.* --exclude edge --exclude v3.0 --exclude v3.1 --exclude v3.2 --exclude v3.3 --exclude v3.4 --exclude v3.5"
+# Lots of exclusions. If you want more version or platforms, remove as necessary
+exclude="--exclude v2.* \
+  --exclude *ppc64le* \
+  --exclude *s390x* \
+  --exclude *armhf* \
+  --exclude *aarch64* \
+  --exclude edge \
+  --exclude v3.0 \
+  --exclude v3.1 \
+  --exclude v3.2 \
+  --exclude v3.3 \
+  --exclude v3.4 \
+  --exclude v3.5 \
+  --exclude v3.7"
 
 mkdir -p "$dest"
 /usr/bin/rsync \
@@ -19,7 +31,7 @@ mkdir -p "$dest"
         --hard-links \
         --delete \
         --delete-after \
-        --delay-updates \
         --timeout=600 \
+        --delay-updates \
         $exclude \
         "$src" "$dest"

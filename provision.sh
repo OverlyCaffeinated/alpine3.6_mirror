@@ -1,19 +1,15 @@
+echo -e "\n--- Provisioning Virtual Machine ---\n"
 
-apk update
+echo -e "\n--- Installing necessary software ---\n"
+apk update > /dev/null 2>&1
+apk add rsync lighttpd nano iftop > /dev/null 2>&1
 
-apk add rsync
-
-cp /vagrant/alpine-mirror /etc/periodic/hourly/alpine-mirror
-
+echo -e "\n--- Configuring Mirror ---\n"
+cp /vagrant/files/alpine-mirror /etc/periodic/hourly/alpine-mirror
 chmod +x /etc/periodic/hourly/alpine-mirror
-
-apk add lighttpd
-
-cp /vagrant/lighttpd.conf /etc/lighttpd/lighttpd.conf
-
+cp /vagrant/files/lighttpd.conf /etc/lighttpd/lighttpd.conf
 rc-service lighttpd start
 rc-update add lighttpd
-
 cat >> /etc/rsyncd.conf <<EOF
 
 [alpine]
