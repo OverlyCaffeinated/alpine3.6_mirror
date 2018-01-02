@@ -12,7 +12,7 @@ Vagrant.configure("2") do |config|
 
   # Every Vagrant development environment requires a box. You can search for
   # boxes at https://vagrantcloud.com/search.
-  config.vm.box = "alpine/alpine64"
+  config.vm.box = "maier/alpine-3.6-x86_64"
 
   config.vm.provision :shell, path: "provision.sh"
 
